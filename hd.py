@@ -1,22 +1,27 @@
+# virtualenv -p /usr/bin/python3.7 /Users/user0able/.virtualenvs/modulesEnv/bin/python3
 import datetime
 
 from PyPDF2 import PdfFileMerger
 import requests
 import os
 
-os.mkdir('temp')
+
+def agrega_ceros_izquierda(numero):
+    return str(numero) if numero >= 10 else "0" + str(numero)
+
 
 hoy = datetime.datetime.now()
-nombre_archivo_salida = "%s-%s-%s.pdf" % (hoy.year, hoy.month, hoy.day)
+nombre_archivo_salida = "%s-%s-%s.pdf" % (
+    hoy.year, agrega_ceros_izquierda(hoy.month), agrega_ceros_izquierda(hoy.day))
 pdfs = []
 nombres_archivos = []
 pdfs_aux = []
 ultima_pagina = 0
 
 for i in range(1, 30):
-    pdfs.append( # tienes que pegar aquí y reemplazar el numero de la página por %s para que se automatice el proceso
-        "https://impresa.soy-chile.cl/AustralValdivia/170420/Paginas/ee1a36622e05/AustralValdivia/17_04_20_pag_%s.pdf" %
-        (str(i) if i >= 10 else '0' + str(i))
+    pdfs.append(  # tienes que pegar aquí y reemplazar el numero de la página por %s para que se automatice el proceso
+        "https://impresa.soy-chile.cl/AustralValdivia/240420/Paginas/f3bebad7a203/AustralValdivia/24_04_20_pag_%s.pdf" %
+        agrega_ceros_izquierda(i)
     )
 
 for y in pdfs:
@@ -36,5 +41,3 @@ for pdf in pdfs_aux:
 
 with open(nombre_archivo_salida, 'wb') as salida:
     fusionador.write(salida)
-
-os.rmdir("/temp/")
