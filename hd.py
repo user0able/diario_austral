@@ -3,7 +3,6 @@ import datetime
 
 from PyPDF2 import PdfFileMerger
 import requests
-import os
 from bs4 import BeautifulSoup
 
 pdfs = []
@@ -12,12 +11,12 @@ pdfs_aux = []
 ultima_pagina = 0
 
 
-def getFecha(dias=2):
+def getFecha(
+        dias=0):  # cantidad de días hacia atrás que buscará el diario :3 / está en 0, porque lo buscará para hoy we :)
     hoy = datetime.date.today()
-    print(hoy)
     cantidad_dias_restar = datetime.timedelta(days=dias)
-    print(cantidad_dias_restar)
     dia_pasado = hoy - cantidad_dias_restar
+    print("fecha elegida: ", dia_pasado)
     return dia_pasado
 
 
