@@ -12,7 +12,7 @@ ultima_pagina = 0
 
 
 def getFecha(
-        dias=0):  # cantidad de días hacia atrás que buscará el diario :3 / está en 0, porque lo buscará para hoy we :)
+        dias=200):  # cantidad de días hacia atrás que buscará el diario :3 / está en 0, porque lo buscará para hoy we :)
     hoy = datetime.date.today()
     cantidad_dias_restar = datetime.timedelta(days=dias)
     dia_pasado = hoy - cantidad_dias_restar
