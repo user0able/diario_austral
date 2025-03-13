@@ -4,6 +4,16 @@ import requests
 from bs4 import BeautifulSoup
 from os import remove
 
+"""
+
+This is the "example" module.
+
+The example module supplies one function, factorial().  For example,
+
+>>> factorial(5)
+120
+"""
+
 
 def getFecha(dias=0):
     hoy = datetime.date.today()
@@ -21,12 +31,15 @@ def genera_url():
     print("fecha de la busqueda:")
 
     temp = requests.get(
-        url="https://www.australvaldivia.cl/impresa/%s/%s/%s/papel/" %
-            (fecha.year, fecha.month, fecha.day if fecha.day >= 9 else '0' + str(fecha.day))
+        url="https://www.australvaldivia.cl/impresa/%s/%s/%s/papel/"
+        % (
+            fecha.year,
+            fecha.month,
+            fecha.day if fecha.day >= 9 else "0" + str(fecha.day),
+        )
     )
     print("temp =", temp)
-
-    soup = BeautifulSoup(temp.content, 'html.parser')
+    soup = BeautifulSoup(temp.content, "html.parser")
     soup = soup.find_all("img")
 
     temp_img_url = None
@@ -53,15 +66,18 @@ def descarga_imagenes(cuando=getFecha(), codigo=codigo):
     ultimo = 1
     arreglo_imagenes_guardadas = []
     for hoja in range(1, 50):
-        web_base = 'https://impresa.soy-chile.cl/AustralValdivia/%s%s%s/AustralValdivia/%s_%s_%s_pag_%s%s' % (
-            (cuando.day if cuando.day >= 10 else '0' + cuando.day.__str__()),
-            cuando.month if cuando.month >= 10 else '0' + cuando.month.__str__(),
-            str(cuando.year)[2:4],
-            (cuando.day if cuando.day >= 10 else '0' + cuando.day.__str__()),
-            cuando.month if cuando.month >= 10 else '0' + cuando.month.__str__(),
-            str(cuando.year)[2:4],
-            hoja if hoja >= 10 else '0' + hoja.__str__(),
-            codigo
+        web_base = (
+            "https://impresa.soy-chile.cl/AustralValdivia/%s%s%s/AustralValdivia/%s_%s_%s_pag_%s%s"
+            % (
+                (cuando.day if cuando.day >= 10 else "0" + cuando.day.__str__()),
+                cuando.month if cuando.month >= 10 else "0" + cuando.month.__str__(),
+                str(cuando.year)[2:4],
+                (cuando.day if cuando.day >= 10 else "0" + cuando.day.__str__()),
+                cuando.month if cuando.month >= 10 else "0" + cuando.month.__str__(),
+                str(cuando.year)[2:4],
+                hoja if hoja >= 10 else "0" + hoja.__str__(),
+                codigo,
+            )
         )
 
         k = requests.get(web_base)
@@ -72,23 +88,28 @@ def descarga_imagenes(cuando=getFecha(), codigo=codigo):
         else:
             aux.append(k)
             print("yep ->", web_base)
-            f = open(u'%s.jpg' % hoja if hoja > 9 else '0' + str(hoja) + ".jpg", 'wb')
-            f.write(
-                k.content
-            )
+            f = open("%s.jpg" % hoja if hoja > 9 else "0" + str(hoja) + ".jpg", "wb")
+            f.write(k.content)
 
         ultimo = ultimo + 1
 
     print(ultimo, type(ultimo))
     for pagina in range(1, ultimo):
-        arreglo_imagenes_guardadas.append(u'%s.jpg' % pagina if pagina > 9 else u'0' + pagina.__str__() + ".jpg")
+        arreglo_imagenes_guardadas.append(
+            "%s.jpg" % pagina if pagina > 9 else "0" + pagina.__str__() + ".jpg"
+        )
 
     print(arreglo_imagenes_guardadas)
 
-    with open(u"%s-%s-%s.pdf" % (fecha.year,
-                                 fecha.month if fecha.month >= 9 else '0' + str(fecha.month),
-                                 fecha.day if fecha.day >= 9 else '0' + str(fecha.day)),
-              "wb") as archivo_pdf:
+    with open(
+        "%s-%s-%s.pdf"
+        % (
+            fecha.year,
+            fecha.month if fecha.month >= 9 else "0" + str(fecha.month),
+            fecha.day if fecha.day >= 9 else "0" + str(fecha.day),
+        ),
+        "wb",
+    ) as archivo_pdf:
         archivo_pdf.write(img2pdf.convert(arreglo_imagenes_guardadas))
 
     print("borrando archivos jpg")
