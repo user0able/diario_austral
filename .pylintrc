@@ -1,0 +1,48 @@
+[MASTER]
+ignore=CVS
+persistent=yes
+load-plugins=
+
+[MESSAGES CONTROL]
+disable=missing-docstring,
+        invalid-name,
+        too-few-public-methods,
+        no-member
+
+[REPORTS]
+output-format=text
+reports=no
+
+[BASIC]
+good-names=i,
+           j,
+           k,
+           ex,
+           Run,
+           _
+
+[FORMAT]
+max-line-length=100
+indent-string='    '
+
+[DESIGN]
+max-args=5
+max-locals=15
+max-returns=6
+max-branches=12
+max-statements=50
+max-parents=7
+max-attributes=7
+
+[IMPORTS]
+known-standard-library=
+known-third-party=
+import-graph=
+ext-import-graph=
+int-import-graph=
+
+[CLASSES]
+max-attributes=10
+
+[EXCEPTIONS]
+overgeneral-exceptions=Exception
