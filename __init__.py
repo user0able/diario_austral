@@ -1,5 +1,6 @@
 import os
 import datetime
+
 from PyPDF2 import PdfReader, PdfMerger, PdfWriter, PageObject
 
 
@@ -12,6 +13,7 @@ def pdfReader():
     page = reader.pages[0]
     text = page.extract_text()
     text = str(text).strip()
+    print(text)
     return text
 
 
@@ -44,8 +46,8 @@ def main():
     pass
 
 
-print(getFecha())
-print(pdfReader())
+getFecha()
+pdfReader()
 pdfCreate()
 pdfMerger()
 cleanTempFiles()
